@@ -1,0 +1,136 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Google Maps Geolocation Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'css/map.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+
+  </head>
+  <body>
+    <main class="container">
+      <div>{{data4}}--{{data5}}</div>
+      <div id="dest" value="{{dest}}">{{dest}}</div>
+       <input id="btn" type="button" value="search for miami coordinates" />
+      <!-- <input  id="pac-input" class="controls" type="text"
+        placeholder="Enter a location"/>
+<div id="lat"></div>
+<div id="long"></d -->
+  <input type="button" value="Reload markers" id="reloadMarkers">
+
+      <div id="map" class="map" style="height:500px"></div>
+    </main>
+
+
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+
+   <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzmWau_xWo_scrR46YyjafPy-p8nMNnJ0&callback=init&libraries=&v=weekly"
+      async
+    ></script>
+
+    <!-- <script
+      src="https://maps.googleapis.com/maps/api/js?key= AIzaSyBEBuWb2FSu74lhFmLrMrWzsbyREdw_D2A&callback=init&libraries=&v=weekly"
+      async
+    ></script>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCOda_5mBfcS-CSoNwlbmWo2deZo1U3jRU"></script>
+    -->
+   
+    <!--  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+   -->
+   <!--  <script async defer src="https://maps.googleapis.com/maps/api/js?key=&callback=init"></script> -->
+  </body>
+  <script>
+// 
+    const createMap = ({ lat, lng }) => {
+    return new google.maps.Map(document.getElementById('map'), {
+      center: { lat, lng },
+      zoom: 15
+    });
+  };
+  
+  const createMarker = ({ map, position }) => {
+    return new google.maps.Marker({ map, position });
+  };
+  
+  const trackLocation = ({ onSuccess, onError = () => { } }) => {
+    // if ('geolocation' in navigator === false) {
+    //   return onError(new Error('Geolocation is not supported by your browser.'));
+    // }
+    if(navigator.geolocation){  
+            navigator.geolocation.getCurrentPosition(showPosition)  
+          }  
+        else  
+        {  
+             alert("Sorry! your browser is not supporting")  
+         }
+  
+
+    // Use watchPosition instead.
+   // return navigator.geolocation.watchPosition(onSuccess, onError);
+  };
+   function showPosition(position){  
+       
+              console.log(position.coords.latitude+"--" + position.coords.longitude)
+     } 
+  
+  const getPositionErrorMessage = code => {
+    switch (code) {
+      case 1:
+        return 'Permission denied.';
+      case 2:
+        return 'Position unavailable.';
+      case 3:
+        return 'Timeout reached.';
+      default:
+        return null;
+    }
+  }
+  $("#btn").click(function(){
+            var geocoder =  new google.maps.Geocoder();
+    geocoder.geocode( { 'address': 'miami, us'}, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            alert("location : " + results[0].geometry.location.lat() + " " +results[0].geometry.location.lng()); 
+          } else {
+            alert("Something got wrong " + status);
+          }
+        });
+});
+  function init() {
+    const initialPosition = { lat: 59.325, lng: 18.069 };
+    const map = createMap(initialPosition);
+    const marker = createMarker({ map, position: initialPosition });
+    const $info = document.getElementById('info');
+    var geocoder =  new google.maps.Geocoder();
+    geocoder.geocode( { 'address': 'miami, us'}, function(results, status) {
+          if (status == google.maps.GeocoderStatus.OK) {
+            console.log("location : " + results[0].geometry.location.lat() + " " +results[0].geometry.location.lng()); 
+          } else {
+            console.log("Something got wrong " + status);
+          }
+        });
+  
+    trackLocation({
+        onSuccess: ({ coords: { latitude: lat, longitude: lng } }) => {
+          marker.setPosition({ lat, lng });
+          map.panTo({ lat, lng });
+          // Print out the user's location.
+          
+        },
+        onError: err => {
+          // Print out the error message.
+         
+        }
+      });
+  }
+
+ 
+
+  </script>
+
+</html>

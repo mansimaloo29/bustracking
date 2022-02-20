@@ -1,0 +1,249 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Google Maps Geolocation Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'css/map.css' %}">
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css' rel='stylesheet' />
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+   <!--  <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v3.1.3/mapbox-gl-directions.js'></script>
+<link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-directions/v3.1.3/mapbox-gl-directions.css' type='text/css' /> -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css' rel='stylesheet' />
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.2.0/mapbox-gl.js"></script>
+<script src='https://api.mapbox.com/mapbox.js/plugins/mapbox-directions.js/v0.4.0/mapbox.directions.js'></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+   integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+   crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+   crossorigin=""></script>
+
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mapbox-polyline/1.0.0/polyline.js" integrity="sha512-xvB39QEEC0b7VUhJKhnx5SdyCeSFShc3ZyBZy2LSTxGHcc/775y4nd0xCstuAAhQ6EazoWPfCHisWUJZ9b+aPw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mapbox-polyline/1.0.0/polyline.min.js" integrity="sha512-sSqLbnGqSEWXtqISEWjsH6WGM96QQxSVCjcxyiBzy7oi8YhCdHK6iS+Ko7nZiIAm5VdgpGbLHBNB70T8l3/1qw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+
+  </head>
+  <body>
+    <main class="container">
+      <div>{{data4}}--{{data5}}</div>
+      <div id="dest" value="{{dest}}">{{dest}}</div>
+      <!-- <input  id="pac-input" class="controls" type="text"
+        placeholder="Enter a location"/>
+<div id="lat"></div>
+<div id="long"></d -->
+  <input type="button" value="Reload markers" id="reloadMarkers">
+
+      <div id="map" class="map" style="height:500px"></div>
+    </main>
+
+
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> -->
+
+   
+    <!-- <script
+      src="https://maps.googleapis.com/maps/api/js?key= AIzaSyBEBuWb2FSu74lhFmLrMrWzsbyREdw_D2A&callback=init&libraries=&v=weekly"
+      async
+    ></script>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCOda_5mBfcS-CSoNwlbmWo2deZo1U3jRU"></script>
+    -->
+   
+    <!--  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+   -->
+   <!--  <script async defer src="https://maps.googleapis.com/maps/api/js?key=&callback=init"></script> -->
+  </body>
+  <script>
+mapboxgl.accessToken = 'pk.eyJ1IjoibXVza2Fuc2FodTI3IiwiYSI6ImNrb3F5YmQ4OTA5Y2wyb29oYXpjN2k1bzIifQ.qJIRHEuoS2zcZTZEKk_jEA';
+
+var arr = []
+var initialPosition = {lat:{{data4}},lng:{{data5}}}
+arr.push(initialPosition)
+if ( navigator.geolocation ) 
+{
+    navigator.geolocation.getCurrentPosition( function(position) {
+
+        var lng = position.coords.longitude;
+        var lat = position.coords.latitude; 
+         var map = new mapboxgl.Map({
+            container: 'map',          
+            style: 'mapbox://styles/mapbox/streets-v11',
+            
+            center: [ lng, lat ], // [ lng, lat ]
+            zoom: 17
+        });                   
+        arr.push({lat:lat,lng:lng})
+        for(var i=0;i<arr.length;i++){
+      var marker = new mapboxgl.Marker()
+       .setLngLat( [ arr[i].lng, arr[i].lat ])
+        .addTo(map);
+       
+   map.addControl(
+    new mapboxgl.GeolocateControl({
+    positionOptions: {
+    enableHighAccuracy: true
+    },
+    trackUserLocation: true
+    })
+    );
+    
+     }
+     calculateRoute(arr)
+
+    });
+
+}
+function calculateRoute(arr) {
+  for(var i=0;i<arr.length;i++){
+  var lngFrom = arr[i].lng
+  var latFrom = arr[i].lat
+  if(arr[i+1]!=undefined){
+    console.log("Dataa")
+  var lngTo = arr[i+1].lng  
+  var latTo = arr[i+1].lat
+}
+
+  $.get('https://api.mapbox.com/directions/v5/mapbox/driving/' + lngFrom + ',' + latFrom + ';' + lngTo + ',' + latTo + '?access_token=pk.eyJ1IjoibXVza2Fuc2FodTI3IiwiYSI6ImNrb3F5YmQ4OTA5Y2wyb29oYXpjN2k1bzIifQ.qJIRHEuoS2zcZTZEKk_jEA', 
+    function( data ) {
+   //  var encoded = data.routes[0].geometry
+   // var coordinates = L.Polyline.fromEncoded(encoded).getLatLngs();
+//console.log(coordinates);
+var coords = data.routes[0].geometry;
+// Draw the route on the map
+addRoute(coords);
+ 
+    //var coords =  polyline.decode(data.routes[0].geometry);
+
+    // var line = L.polyline(coords).addTo(map);
+
+  }); 
+// var origin = [lngFrom,latFrom];
+ 
+// // Washington DC
+// var destination = [lngTo,latTo];
+ 
+// // A simple line from origin to destination.
+// var route = {
+// 'type': 'FeatureCollection',
+// 'features': [
+// {
+// 'type': 'Feature',
+// 'geometry': {
+// 'type': 'LineString',
+// 'coordinates': [origin, destination]
+// }
+// }
+// ]
+// };
+// map.addSource('route', {
+// 'type': 'geojson',
+// 'data': route
+// });
+
+
+// map.addLayer({
+// 'id': 'route',
+// 'source': 'route',
+// 'type': 'line',
+// 'paint': {
+// 'line-width': 2,
+// 'line-color': '#007cbf'
+// }
+// });
+//   var origin = [lngFrom,latFrom];
+ 
+// // Washington DC
+// var destination = [lngTo,latTo];
+//   var route = {
+//     'type': 'FeatureCollection',
+//     'features': [
+//     {
+//     'type': 'Feature',
+//     'geometry': {
+//     'type': 'LineString',
+//     'coordinates': [origin, destination]
+//     }
+//     }
+//     ]
+//     };
+
+//     map.on('load', function () {
+//     // Add a source and layer displaying a point which will be animated in a circle.
+//     map.addSource('route', {
+//     'type': 'geojson',
+//     'data': route
+//     });
+
+
+//     map.addLayer({
+//     'id': 'route',
+//     'source': 'route',
+//     'type': 'line',
+//     'paint': {
+//     'line-width': 2,
+//     'line-color': '#007cbf'
+//     }
+//     });
+
+// });
+
+//   var directions = L.mapbox.directions({
+//     profile: 'mapbox.walking' 
+// });
+
+// // Set the origin and destination for the direction and call the routing service
+// directions.setOrigin(L.latLng(latFrom,lngFrom)); 
+// directions.setDestination(L.latLng(latTo,lngTo));   
+// directions.query(); 
+
+// var directionsLayer = L.mapbox.directions.layer(directions).addTo(map); 
+// var directionsRoutesControl = L.mapbox.directions.routesControl('routes', directions)
+//     .addTo(map); 
+  }
+
+};
+
+function addRoute(coords) {
+  console.log(coords)
+// If a route is already loaded, remove it
+ var mapLayer = map.getLayer('route');
+
+    if(typeof mapLayer !== 'undefined') {
+      // Remove map layer & source.
+      map.removeLayer('route').removeSource('route');
+    }else {
+map.addLayer({
+'id': 'route',
+'type': 'line',
+'source': {
+'type': 'geojson',
+'data': {
+'type': 'Feature',
+'properties': {},
+'geometry': coords
+}
+},
+'layout': {
+'line-join': 'round',
+'line-cap': 'round'
+},
+'paint': {
+'line-color': '#03AA46',
+'line-width': 8,
+'line-opacity': 0.8
+}
+});
+}
+}
+ 
+ 
+
+  </script>
+
+</html>

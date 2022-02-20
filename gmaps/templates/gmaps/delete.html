@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
+   <style>
+   	@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    /*background-color: #28223F;*/
+    /*background:url(https://hdqwalls.com/download/material-design-4k-2048x1152.jpg) fixed;
+    background-size: cover;
+    font-family: Montserrat, sans-serif;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    min-height: 100vh;
+    margin: 0;*/
+    background:url(https://hdqwalls.com/download/material-design-4k-2048x1152.jpg) fixed;
+    
+    background-size: cover;
+    font-family: Montserrat, sans-serif;
+    
+    
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    min-height: 100vh;
+    margin: 0;
+
+}
+
+   </style>
+</head>
+<body>
+<div class="row card-container text-center col-md-12">
+	<div class="col-md-4"></div>
+	<div class="col-md-4" style="margin-top:5%;">
+		<div class="card card-body">
+
+
+			<p>Are you sure you want to delete "{{comp}}"?</p>
+
+			<form action="{% url 'delete_complaint' comp.id  %}" method="POST">
+				
+				{% csrf_token %}
+				<a class="btn btn-danger" href="{% url 'admincomplaint' %}">Cancel</a>
+
+				<input class="btn btn-primary" type="submit" name="Confirm">
+			</form>
+		</div>
+	</div>
+	<div class="col-md-4">
+</div>
+</body>
+</html>

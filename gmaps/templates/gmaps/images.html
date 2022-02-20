@@ -1,0 +1,116 @@
+<!-- <h1>Hello, world!</h1>
+<div class="container">
+
+	
+{% csrf_token %}
+
+
+</form>
+
+
+
+</div> -->
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css"/>
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
+   <style>
+		 @import url('https://fonts.googleapis.com/css?family=Montserrat');
+ 
+		/*body{
+			background:url(https://hdqwalls.com/download/material-design-4k-2048x1152.jpg) fixed;
+	        background-size: cover;
+		}*/
+		body {
+    
+    background:url(https://hdqwalls.com/download/material-design-4k-2048x1152.jpg) fixed;
+    background-size: cover;
+    font-family: Montserrat, sans-serif;
+    
+   
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    min-height: 100vh;
+    margin: 0;
+}
+
+ .card {
+  margin: 30px auto;
+  width: 38%;
+  height: 600px;
+  border-radius: 40px;
+  background:url(https://hdqwalls.com/download/material-design-4k-2048x1152.jpg) fixed;
+  background-size: cover;
+  box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.22);
+  cursor: pointer;
+  transition: 0.4s;
+}
+
+.round {
+    border: 1px solid black;
+    border-radius: 50%;
+    padding: 7px;
+}
+
+.button{
+	border:1px solid #ccc;
+	padding:15px 20px;
+	width:50%;
+
+	border-radius:25px;
+  font-size: 13px;
+	color:white;
+	cursor: pointer;
+	background:#1161ee;
+}
+	</style>
+</head>
+<body>
+	<div class="col-2 col-sm-2 col-md-1 d-flex " >
+                <a class="d-flex justify-content-center align-items-center btn btn-outline-light" 
+                href= "{% url 'routeDetailsAdd' %} "style="margin-top: 5px;margin-left:0%;">
+                    <i class="material-icons">arrow_back</i>
+                </a>
+            </div>
+<div class ="container card">
+	<div class="row">
+		<div class="col-6 mx-auto mt-5">
+		{% block content %}
+<h2 class="text-center mb-5">Upload Notice</h2>
+<hr />
+
+
+
+<form action="{% url 'index2' %}" method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+	
+	
+	   <div class = "text-center form-group">
+	   {{form.as_p}}
+	   </div>
+	
+
+	<center>
+<button type="submit" class="button">Upload</button></center>
+</center>
+	
+</form>
+
+			{% endblock %}
+</div>
+</div>
+</div>
+</body>
+</html>

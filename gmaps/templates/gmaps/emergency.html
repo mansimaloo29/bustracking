@@ -1,0 +1,181 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+
+<div>
+	<form method="POST" action="{% url 'usercomplaint' %}">
+		{% csrf_token %}
+	<input type="text" name="name"/>Name
+	<input type="text" name="busno"/>BusNo
+	<input type="text" name="complaints"/>complaints
+	<input type="submit" value="Submit"/>
+	</form>
+	
+</div>
+</body>
+</html> -->
+
+
+
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
+    <title></title>
+    <style type="text/css">
+        @import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    /*background-color: #28223F;*/
+    /*background:url(https://hdqwalls.com/download/material-design-4k-2048x1152.jpg) fixed;
+    background-size: cover;
+    font-family: Montserrat, sans-serif;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    min-height: 100vh;
+    margin: 0;*/
+    background:url(https://hdqwalls.com/download/material-design-4k-2048x1152.jpg) fixed;
+    background-size: cover;
+    font-family: Montserrat, sans-serif;
+    
+   
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    min-height: 100vh;
+    margin: 0;
+}
+
+h3 {
+    margin: 10px 0;
+    color: black;
+    font-size: 18px;
+}
+
+h6 {
+    margin: 5px 0;
+    text-transform: uppercase;
+}
+
+p {
+    font-size: 14px;
+    line-height: 21px;
+}
+
+.card-container {
+    /*background-color: #231E39;*/
+    border-radius: 35px;
+    box-shadow: 0px 10px 20px -10px rgba(0,0,0,0.75);
+    color: #B3B8CD;
+    padding-top: 30px;
+    position: relative;
+    width: 500px;
+    max-width: 100%;
+    text-align: center;
+    height: 550px;
+    transition: 0.4s;
+
+}
+
+.card-container .round {
+    border: 1px solid black;
+    border-radius: 50%;
+    padding: 7px;
+}
+
+.card-container:hover {
+  transform: scale(0.9, 0.9);
+  box-shadow: 5px 5px 30px 15px rgba(0,0,0,0.25), 
+    -5px -5px 30px 15px rgba(0,0,0,0.22);
+}
+
+button.primary {
+    margin-top: 20px;
+    background-color: black;
+    border: 1px solid black;
+    border-radius: 3px;
+    color: white;
+    font-family: Montserrat, sans-serif;
+    font-weight: 500;
+    padding: 10px 25px;
+}
+
+button.primary.ghost {
+    background-color: transparent;
+    color: white;
+}
+.input {
+    margin-left:3.1%;width:300px;
+    border:none;
+    padding:8px 13px;
+    border-radius:20px;
+    background:#F1F4F8;"
+}
+ .group .button{
+	width:45%;
+	color:#fff;
+	align-items: center;
+	margin-top:3%;
+	border:none;
+	padding:15px 20px;
+	border-radius:25px;
+	background:#1161ee;
+}
+
+    </style>
+</head>
+<body>
+	
+     <div class="col-2 col-sm-2 col-md-1 d-flex justify-content-md-center align-items-md-center" 
+            style="padding-bottom: 20px;display: block;">
+                <a class="d-flex justify-content-center align-items-center btn btn-outline-light" 
+                href= "{% url 'userHomePage' %} "style="float:left;margin-top:5%;">
+                    <i class="material-icons d-lg-flex justify-content-lg-center align-items-lg-center">arrow_back</i>
+                </a>
+            </div>
+            <form method="POST" action="{% url 'usercomplaint' %}">
+    <div style="display: flex; align-items: center;justify-content: center;flex-direction: column;margin-top:2%;" >
+    <div class="card-container">
+    	
+	     {% csrf_token %}
+<!--    <span class="pro">PRO</span> -->
+     <h3>Name</h3>
+    <input type="text" name="name" class="input" >
+    <h3>Bus Number</h3>
+    <input type="text" name="busno" class="input">
+    <h3>Complaint</h3>
+    <textarea name="complaints" rows="4" cols="50" style="border-radius: 25px;"></textarea>
+<div style="border:1px solid #ccc;">
+   <div> <label style="color:black;">Bus Coordinator-</label><label style="color:black;">&nbsp;&nbsp;9898989898</label></div>
+    <div><label style="color:black;">Police-</label><label style="color:black;">&nbsp;&nbsp;100</label></div>
+    <div><label style="color:black;">Ambulance-</label><label style="color:black;">&nbsp;&nbsp;108</label></div>
+</div>
+    <!-- <input type="text" name="complaints" class="input">
+     --><!--  <h3>Mobile Number</h3>
+    <input type="text" name="username" class="input" value="{{user.mobile}}" readonly="">
+ -->
+    <div class="group">
+    <span><input type="submit" class="button" value="Send"></span>
+     </div>
+		
+					
+</div>
+</div>
+</form>
+</body>
+</html>

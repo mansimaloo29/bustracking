@@ -1,0 +1,22 @@
+    <form method="POST" action="{% url 'search' %}">
+        {% csrf_token %}
+                    <div >
+                        <label>Route</label>
+                        <select name="route" class="form-control" required="">
+                            <option value="" hidden="">Select your route</option>
+                            {% for route in selectroutes %}
+                            <option value="{{ route.id }}">{{ route.source }} to {{route.destination}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                     <div class="form-group" style="padding-top: 20px;">
+                        <button class="btn btn-outline-light btn-block" type="submit" >Find your Bus</button>
+                    </div>
+                    <!-- <div class="row">
+    <div class="col">
+        {% for routed in buses %}
+            <p>{{ routed.busNo }}</p>
+        {% endfor %}
+    </div>
+</div> -->
+</form>

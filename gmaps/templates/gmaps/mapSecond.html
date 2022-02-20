@@ -1,0 +1,183 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+  <style>
+    body{
+       background:url(https://hdqwalls.com/download/material-design-4k-2048x1152.jpg) fixed;
+       background-size:cover;
+
+
+
+    }
+
+
+    .div{
+      /*background:url(https://hdqwalls.com/download/material-design-4k-2048x1152.jpg) ;
+      background-size: 100% 100%;
+      
+height: 400px;
+width: 550px;
+margin: 100px auto;
+padding: 20px;
+border-radius: 10px;
+position: relative;*/
+
+width: 100%;
+  margin-left:500px;
+  margin-top: 45px;
+  max-width:510px;
+  min-height:220px;
+  position:relative;
+  background:url(https://hdqwalls.com/download/material-design-4k-2048x1152.jpg) fixed;
+  background-size: cover;
+  box-shadow:0 12px 15px 0 rgba(0,0,0,.24),0 17px 50px 0 rgba(0,0,0,.19);
+}
+.label{
+  color:black;
+  padding: 50px;
+  
+}
+button.primary {
+    margin-top: 20px;
+    background-color: black;
+    border: 1px solid black;
+    border-radius: 3px;
+    color: white;
+    text-align: center;
+    font-family: Montserrat, sans-serif;
+    font-weight: 500;
+    padding: 10px 25px;
+}
+
+button.primary.ghost {
+    background-color: transparent;
+    color: white;
+}
+
+
+  </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17-beta.0/vue.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.js"></script>
+<script src="https://unpkg.com/vue2-leaflet@1.0.1/dist/vue2-leaflet.js"></script>
+<script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
+<script src="https://unpkg.com/vuefire@1.3.0/dist/vuefire.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.4.3/firebase-database.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css" rel="stylesheet" />
+<!-- <link rel="stylesheet" href="{%static 'maps.css'%}"> -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+<body>
+  <div  style="position: absolute; top: 20px; right: 20px; text-align: right;">
+                <a style="border:1px solid #ccc;padding: 5px 20px 15px 20px;"href ="{% url 'ulogout' %}">
+                   Logout</a>
+              </div>
+ <div class="div" id="app">
+ 
+                <form method="POST" >
+                  {% csrf_token %} 
+                <label for="myNumber" class="label"> Bus Number:</label>
+               <input style="width:200px;height: 30px;border: 2px solid black;border-radius: 4px;"
+               type="number" id="myNumber" name="myNumber" value="myNumber">
+
+
+<br />
+<center>
+<button class="primary"><a style="text-decoration:none;"type="button" onclick="myFunction()">
+           Submit</a>
+        </button>
+
+       
+      
+        <a style="border:1px solid black;padding:10px 20px 12px 20px;color:white;"href = "{% url 'viewProfileDriver' %}" >
+            View Profile
+        </a>
+
+        </center>
+       
+    
+<!-- <button style="  background-color:black; 
+
+  border: none;
+  color: white;
+  padding: 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  font-weight: bold;
+  margin: 100px 200px;
+  width: 150px;
+
+  cursor: pointer;
+  border-radius:10%;" type="button" onclick="myFunction()">Submit</button>
+ -->
+  
+
+      </form>
+       <center><button  class="primary" onclick="toggleDiv()" style="margin-bottom:4%;">Show my location</button></center>
+
+      
+</div> 
+<!--  <div id="app">
+  <l-map ref="map" :zoom="zoom" :center="center">
+    <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+    <l-marker :key="index" v-for="(user, index) in users" :lat-lng="formatLocation(user.coords.latitude, user.coords.longitude)"></l-marker>
+    </l-map>
+</div>  -->
+
+<center><div id="dvMap" style="width:100%; height: 500px;display: none;margin-top:2%;"></div></center>
+ <script src="{% static 'js/map.js' %}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script>
+
+
+function initialize() {
+ if (navigator.geolocation) {
+  console.log("Inside if")
+    navigator.geolocation.getCurrentPosition(function (p) {
+        var LatLng = new google.maps.LatLng(p.coords.latitude, p.coords.longitude);
+        var mapOptions = {
+            center: LatLng,
+            zoom: 15,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var busi;
+        busi= {
+                url: "{% static '/images/787688.png' %}", // url
+                scaledSize: new google.maps.Size(60, 60), // size
+            };
+        
+        var map = new google.maps.Map(document.getElementById("dvMap"), mapOptions);
+        var marker = new google.maps.Marker({
+            position: LatLng,
+            map: map,
+            icon:busi,
+            title: "<div style = 'height:60px;width:200px'><b>Your location:</b><br />Latitude: " + p.coords.latitude + "<br />Longitude: " + p.coords.longitude
+        });
+        google.maps.event.addListener(marker, "click", function (e) {
+            var infoWindow = new google.maps.InfoWindow();
+            infoWindow.setContent(marker.title);
+            infoWindow.open(map, marker);
+        });
+    });
+} else {
+    alert('Geo Location feature is not supported in this browser.');
+}
+}
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&callback=initialize"></script>
+
+ 
+   
+</body>
+
+</html>

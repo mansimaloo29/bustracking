@@ -1,0 +1,553 @@
+
+
+ {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Google Maps Geolocation Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'css/map.css' %}">
+
+  </head>
+  <body>
+    <main class="container">
+   <!--    <div >{{data4}}--{{data5}}</div> -->
+       <input type="hidden" id="busNo" name="jsvariable" value="{{ busNo }}">
+        <input type="hidden" id="lat2" name="jsvariable" value="{{ data4 }}">
+      <input type="hidden" id="long2" name="jsvariable" value="{{ data5 }}">
+
+      <!-- <div>{{busNo}}</div>
+      <div id="dest" value="{{dest}}">{{dest}}</div>
+
+     
+  <input type="button" value="Reload markers" id="reloadMarkers"> -->
+ <div id="distance">
+        
+      </div>
+      <div id="map" class="map" style="height:500px"></div>
+    </main>
+<script>
+  var long2 = document.getElementById("long2").value;
+  var lat2 = document.getElementById("lat2").value;
+   var val = document.getElementById("busNo").value;
+    const createMap = ({ lat, lng }) => {
+    return new google.maps.Map(document.getElementById('map'), {
+      center: { lat, lng },
+      zoom: 10
+    });
+  };
+  function autoRefresh()
+    {
+        window.location = window.location.href;
+    }
+     setInterval('autoRefresh()', 7000);
+  
+  const createMarker = ({ map, position }) => {
+    return new google.maps.Marker({ map, position });
+  };
+ 
+  const trackLocation = ({ onSuccess, onError = () => { } }) => {
+    if ('geolocation' in navigator === false) {
+      return onError(new Error('Geolocation is not supported by your browser.'));
+    }
+    
+    // Use watchPosition instead.
+    //return navigator.geolocation.watchPosition(showPosition);
+    return navigator.geolocation.getCurrentPosition(showPosition);
+  };
+
+function returnMapUrl(arr){
+     var point= arr[1] || map.getCenter();
+     return "http://maps.google.com/?ll="+point.lat+','+point.lng;
+} 
+
+ var arr=[]
+  function showPosition(position) {
+    var latitude = position.coords.latitude;
+    var lon = position.coords.longitude;
+    console.log(latitude+" " + lon)
+    var url="{% static '/images/user-orange.png' %}"
+    var position = {lat : latitude,lng:lon,url:url}
+    arr.push(position)
+    var i = 1;
+    if(i== 1){
+      console.log("INIT")
+      init()
+      i=0;
+    }
+    //returnMapUrl(arr)
+
+
+
+}
+
+// function calcRoute() {
+//   var selectedMode = document.getElementById('mode').value;
+//   var request = {
+//       origin: haight,
+//       destination: oceanBeach,
+//       // Note that JavaScript allows us to access the constant
+//       // using square brackets and a string value as its
+//       // "property."
+//       travelMode: google.maps.TravelMode[selectedMode]
+//   };
+//   directionsService.route(request, function(response, status) {
+//     if (status == 'OK') {
+//       directionsRenderer.setDirections(response);
+//       console.log("OKKKKKKKK")
+//     }
+//   });
+// }
+
+  const getPositionErrorMessage = code => {
+    switch (code) {
+      case 1:
+        return 'Permission denied.';
+      case 2:
+        return 'Position unavailable.'; 
+      case 3:
+        return 'Timeout reached.';
+      default:
+        return null;
+    }
+  }
+
+//document.getElementById('reloadMarkers').addEventListener('click', reloadMarkers);
+ // function autoRefresh()
+ //    {
+ //        window.location = window.location.href;
+ //    }
+ //     setInterval('autoRefresh()', 5000);
+
+function distance() {
+    var lat1 = arr[0].lat
+     var lon1 = arr[0].lng
+  for(var i=0;i<arr.length;i++){
+      console.log(arr[i+1])
+      if(arr[i+1] != undefined){
+         var lat2 = arr[i+1].lat
+         var lon2 = arr[i+1].lng
+      }
+    
+   
+    if ((lat1 == lat2) && (lon1 == lon2)) {
+        return 0;
+    }
+    else {
+        var radlat1 = Math.PI * lat1/180;
+        var radlat2 = Math.PI * lat2/180;
+        var theta = lon1-lon2;
+        var radtheta = Math.PI * theta/180;
+        var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+        if (dist > 1) {
+            dist = 1;
+        }
+        dist = Math.acos(dist);
+        dist = dist * 180/Math.PI;
+        dist = dist * 60 * 1.1515;
+        var unit = "K"
+        if (unit=="K") { dist = dist * 1.609344 }
+        if (unit=="N") { dist = dist * 0.8684 }
+        console.log(dist)
+        document.getElementById('distance').innerHTML = "Distance between user and driver:- " + dist.toFixed(2) + "km";
+       
+
+
+     
+
+        return dist;
+    }
+    }
+  }
+
+// function distance() {
+//   for(var i=0;i<arr.length;i++){
+//       console.log(arr[i+1])
+//       if(arr[i+1] != undefined){
+//          var lat2 = arr[i+1].lat
+//          var lon2 = arr[i+1].lng
+//       }
+//     var lat1 = arr[i].lat
+//      var lon1 = arr[i].lng
+   
+//     if ((lat1 == lat2) && (lon1 == lon2)) {
+//         return 0;
+//     }
+//     else {
+//         var radlat1 = Math.PI * lat1/180;
+//         var radlat2 = Math.PI * lat2/180;
+//         var theta = lon1-lon2;
+//         var radtheta = Math.PI * theta/180;
+//         var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+//         if (dist > 1) {
+//             dist = 1;
+//         }
+//         dist = Math.acos(dist);
+//         dist = dist * 180/Math.PI;
+//         dist = dist * 60 * 1.1515;
+//         var unit = "K"
+//         if (unit=="K") { dist = dist * 1.609344 }
+//         if (unit=="N") { dist = dist * 0.8684 }
+//         console.log(dist)
+     
+
+//         return dist;
+//     }
+//     }
+//   }
+var markers = [];
+function  routeDraw(map,lat_lng){
+  console.log("Route Drawwwwww")
+        var path = new google.maps.MVCArray();
+ 
+       
+        var service = new google.maps.DirectionsService();
+ 
+       
+        var poly = new google.maps.Polyline({ map: map, strokeColor: '#4986E7' });
+ 
+       
+       
+        for (var i = 0; i < lat_lng.length; i++) {
+          console.log(lat_lng[i])
+            if ((i + 1) < lat_lng.length) {
+                var src = lat_lng[i];
+                var des = lat_lng[i + 1];
+                //calculateAndDisplayRoute(directionsService, directionsRenderer,src,des);
+                path.push(src);
+                poly.setPath(path);
+                service.route({
+                    origin: src,
+                    destination: des,
+                    travelMode: google.maps.DirectionsTravelMode.DRIVING
+                }, function (result, status) {
+                    if (status == google.maps.DirectionsStatus.OK) {
+                    for (var i = 0, len = result.routes[0].overview_path.length; i < len; i++) {
+                        path.push(result.routes[0].overview_path[i]);
+                    }
+                    poly.setPath(path);
+                  
+                } else {
+                   console.log("directions request failed, status="+status+" ");
+                }
+                });
+                
+
+               // getCommuteTime(arr)
+            }
+          }
+}
+
+function getCommuteTime(_distance) {
+
+        var _Speed = $("#txtAvgSpeed").val(); 
+        console.log(parseInt(_Speed))   
+        var _Time = parseInt(((_distance / 1000) / parseInt(_Speed)) * 60);
+        console.log(_Time)   
+        // if (_htmlTrCount - 1 == 0) {    
+        //     _Time = 0;    
+        //     _distance = 0;    
+        // }   
+  // var lat1 ,lng1,lat2,lng2;
+  // for(var i=0;i<arr.length;i++){
+  //   console.log(arr[i])
+  //     lat1 = arr[0].lat;
+  //     lng1 = arr[0].lng;
+  //     if(arr[i+1]!=undefined){
+  //       lat2 = arr[i].lat;
+  //       lng2 = arr[i].lng;
+  //     }
+
+  // }
+  // console.log(lat1,lng1);
+  // console.log(lat2,lng2)
+  //  var queryURL = 
+  //  "https://maps.googleapis.com/maps/api/distancematrix/json?units=imperial&origins=" + parseInt(lat1)+","+parseInt(lng1)  + "&destinations=" + parseInt(lat2)+","+parseInt(lng2) + "&key=AIzaSyA3zOLmcGIxA-Ne2ltvSxJ5pbmo2spsOeY"
+
+  // $.ajax({
+  // url: queryURL,
+  // method: "GET"
+  // }).then(function(response) {
+  //   console.log(response)
+    
+  //   var commuteTime = response.rows[0].elements[0].duration.text;
+
+  //   console.log(commuteTime)
+  //  });
+
+  } 
+
+
+function setMarkers(arr) {
+  console.log("setMarkers")
+      var directionsService = new google.maps.DirectionsService();
+       var directionsRenderer = new google.maps.DirectionsRenderer();
+   var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 10,
+                center: new google.maps.LatLng(arr[0].lat, arr[0].lng),
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            });
+        directionsRenderer.setMap(map);
+       console.log("AfterMapppp")
+        var lat_lng = [];
+       
+        var latlngbounds = new google.maps.LatLngBounds();
+        var jsonDemo = {
+          "lat" : arr[0].lat,
+          "lng":arr[0].lng
+        }
+        var busi;
+        for (var i = 0; i < arr.length; i++) {
+          console.log(arr[i])
+           busi= {
+                url: arr[i].url, // url
+                scaledSize: new google.maps.Size(60, 60), // size
+            };
+        //   if(arr[i].lat == jsonDemo.lat){
+        //     console.log("INSIDEEE ARRRAYYYYYYYYYYYYYYYYY")
+          
+        //     busi= {
+        //         url: "{% static '/images/787688.png' %}", // url
+        //         scaledSize: new google.maps.Size(60, 60), // size
+        //     };
+        //   }else{
+        //        console.log("INSIDEEE Elseeeeeeeeeeeeee")
+        //         busi={ url: "{% static '/images/user-orange.png' %}", // url
+        //         scaledSize: new google.maps.Size(60, 60),
+        //   }
+        // }
+ 
+            
+            var data = arr[i]
+            var myLatlng = new google.maps.LatLng(data.lat, data.lng);
+           
+            lat_lng.push(myLatlng);
+             var marker = new google.maps.Marker({
+                position: myLatlng,
+                map: map,
+
+                icon:busi,
+
+
+              
+            });
+            markers.push(marker)
+            latlngbounds.extend(marker.position);
+            (function (marker, data) {
+                // google.maps.event.addListener(marker, "click", function (e) {
+                //     infoWindow.setContent(data.description);
+                //     infoWindow.open(map, marker);
+                // });
+            })(marker, data);
+            
+        }
+       
+        //map.setCenter(latlngbounds.getCenter());
+        map.fitBounds(latlngbounds);
+        const onChangeHandler = function () {
+          calculateAndDisplayRoute(directionsService, directionsRenderer);
+        };
+        distance()
+        //getCommuteTime(arr)
+        routeDraw(map,lat_lng)
+        
+          
+        
+    }
+
+
+ function removeMarkers(){
+  console.log("Remove markerssss")
+     var i;
+     for(i=0;i<markers.length;i++){
+       console.log(markers[i])
+       markers[i].setMap(null);
+     }
+     markers = [];
+   
+
+    }
+    // setInterval(function() { 
+    //    updateTheMarkers();
+    //    distance();
+    // }, 30000);
+
+ function updateTheMarkers(){
+      $.ajax({
+      type: "GET",
+      url: "/update_marker",
+      data : {
+        busNo:val
+      },
+       success: function(data){
+            console.log(data)
+            console.log("Success")
+                  removeMarkers();
+                  //  $.each(data, function(i, item) {
+                  //    var places = item.lat+','+ item.lng;   
+                  //    console.log(places) 
+                  // });
+                           //  console.log(typeof(data))
+                  var stringified = JSON.stringify(data);
+                  var parsedObj = JSON.parse(stringified);
+
+                  console.log(parsedObj);
+
+                 // // var jsonObj = JSON.parse(data);
+                 //  console.log(typeof(parsedObj))
+
+                 //  arr =[];//Erasing the beaches array
+                 //  //arr.push(parsedObj)
+
+                 //  //Adding the new ones
+                 //  var data = [];
+                   var countKey = Object.keys(parsedObj).length;
+                   console.log(countKey)
+                   var param={}
+                   for(var i in parsedObj) {
+                       console.log(i.long)
+                       param ={
+                         "lat":parsedObj.lat,
+                         "lng":parsedObj.long
+                       }
+
+                      //data.push(jsonObj[i]);
+                  }
+                  console.log(param)
+                  arr.push(param)
+                  // for(var  i = 0 ;i<countKey;i++){
+                  //   console.log(jsonObj)
+                  //   if(jsonObj[i]!=undefined){
+                  //   var data1 = jsonObj[i].lat
+                  //   var data2 = jsonObj[i].lng
+                  // }
+                  //   arr.push({lat:data1,lng:data2})
+
+                  //   //beaches.push(jsonObj.beaches[i]);
+                  // }
+
+                  //Adding them to the map
+                setMarkers(arr);
+        }
+      });
+    }
+
+
+  function init() {
+    
+  
+    const initialPosition = {  lat: lat2 , lng: long2 ,url:"{% static '/images/787688.png' %}"};
+    //console.log(initialPosition)
+      
+      arr.push(initialPosition)
+   
+      setMarkers(arr)
+
+     
+          // var start = document.getElementById('start').value;
+          // var end = document.getElementById('end').value;
+         
+          // var infowindow = new google.maps.InfoWindow();
+          // var marker, i;
+          // for (i = 0; i < arr.length; i++) {
+             
+          //      marker = new google.maps.Marker({
+          //         position: new google.maps.LatLng(arr[i].lat, arr[i].lng),
+          //         map: map
+          //     });
+          //       google.maps.event.addListener(marker, 'click', (function (marker, i) {
+          //           // return function () {
+          //           //     infowindow.setContent(locations[i][0]);
+          //           //     infowindow.open(map, marker);
+          //           // }
+          //       })(marker, i));
+          //   }
+        
+   //  var path = new google.maps.MVCArray();
+   //  var service = new google.maps.DirectionsService();
+
+   //  //map = new google.maps.Map(document.getElementById("map"), mapOptions);
+   //  var poly = new google.maps.Polyline({
+   //      map: map,
+   //      strokeColor: '#F3443C'
+   //  });
+   // // var lat_lng = new Array();
+    
+   //  for (var i = 0; i < lat_lng.length; i++) {
+   //      if ((i + 1) < lat_lng.length) {
+   //          var src = new google.maps.LatLng(parseFloat(lat_lng[i].lat), 
+   //                                           parseFloat(lat_lng[i].lng));
+            
+              
+   //          var des = new google.maps.LatLng(parseFloat(lat_lng[i+1].lat), 
+   //                                           parseFloat(lat_lng[i+1].lng));
+           
+   //          service.route({
+   //              origin: src,
+   //              destination: des,
+   //              travelMode: google.maps.DirectionsTravelMode.DRIVING
+   //          }, function (result, status) {
+   //              if (status == google.maps.DirectionsStatus.OK) {
+   //                  for (var i = 0, len = result.routes[0].overview_path.length; i < len; i++) {
+   //                      path.push(result.routes[0].overview_path[i]);
+   //                  }
+   //                  poly.setPath(path);
+                  
+   //              } else {
+   //                 console.log("directions request failed, status="+status+" ");
+   //              }
+   //          });
+   //      }
+   //    }
+
+// var line = new google.maps.Polyline({path: [dakota, frick], map: map});
+    //const map = createMap(initialPosition);
+    //const marker = createMarker({ map, position: initialPosition });
+    //const $info = document.getElementById('info');
+//    
+  
+    trackLocation({
+        onSuccess: ({ coords: { latitude: lat, longitude: lng } }) => {
+          marker.setPosition({ lat, lng });
+          map.panTo({ lat, lng });
+         // arr.push({lat:lat,lng:lng})
+          // Print out the user's location.
+          $info.textContent = `Lat: ${lat} Lng: ${lng}`;
+          // Don't forget to remove any error class name.
+          $info.classList.remove('error');
+        },
+        onError: err => {
+          // Print out the error message.
+          $info.textContent = `Error: ${getPositionErrorMessage(err.code) || err.message}`;
+          // Add error class name.
+          $info.classList.add('error');
+        }
+      });
+  }
+
+
+ 
+
+  </script>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+   <script
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzmWau_xWo_scrR46YyjafPy-p8nMNnJ0&callback=init&libraries=&v=weekly"
+      async
+    ></script>
+    <!-- <script
+      src="https://maps.googleapis.com/maps/api/js?key= AIzaSyBEBuWb2FSu74lhFmLrMrWzsbyREdw_D2A&callback=init&libraries=&v=weekly"
+      async
+    ></script>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCOda_5mBfcS-CSoNwlbmWo2deZo1U3jRU"></script>
+    -->
+   
+    <!--  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&signed_in=true"></script>
+   -->
+   <!--  <script async defer src="https://maps.googleapis.com/maps/api/js?key=&callback=init"></script> -->
+  </body>
+</html>

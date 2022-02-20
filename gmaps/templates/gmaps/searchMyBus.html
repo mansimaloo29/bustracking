@@ -1,0 +1,123 @@
+
+{% extends 'gmaps/base.html' %}
+{% block title %}
+Search - BUSe
+{% endblock title %}
+
+{% block header-orange %}
+{% load static %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<div class="container hero" style="font-family: Montserrat, sans-serif; padding-bottom : 50px;">
+        <div class="row">
+            <div class="col-2 col-sm-2 col-md-1 d-flex justify-content-md-center align-items-md-center" 
+            style="padding-bottom: 20px;">
+                <a class="d-flex justify-content-center align-items-center btn btn-outline-light" 
+                href= "{% url 'findMyBus' %} "style="padding-top: 6px;margin-top: 15px;">
+                    <i class="material-icons d-lg-flex justify-content-lg-center align-items-lg-center">arrow_back</i>
+                </a>
+            </div>
+            <div
+                class="col d-flex d-sm-flex d-md-flex justify-content-center align-items-center align-items-sm-center justify-content-md-center">
+                <h3 class="d-sm-flex justify-content-sm-start align-items-sm-center justify-content-lg-center" style="font-size: 20px;color: rgb(255,255,255);">Buses on the selected route</h3>
+        </div>
+</div>
+<div class="row">
+   
+      {% for i in bus %}
+        <div class="col-sm-12 col-md-6 col-lg-4" style="padding: 10px 15px;">
+              <input type="hidden" id="source" name="jsvariable" value="{{ i.selectroute.source }}">
+                      <input type="hidden" id="destination" name="jsvariable" value="{{ i.selectroute.destination }}">
+            <div class="card text-white bg-dark">
+                <div class="card-body">
+                    <h4 class="card-title">Bus No: {{i.busNo}}</h4>
+                     <h5 class="card-title">Route: {{i.selectroute}}</h5>
+                   
+                    
+                    <p class="card-text"></p> <a style="width:135px"  
+                    href="{% url 'getDetailsFromDB' busNo=i.busNo dest=i.selectroute.destination %}" class="card-link btn btn-outline-light">Find your Bus</a> <a style="width:135px"  
+                    class="card-link btn btn-outline-light itee">Track your route</a> 
+                  <!--   <button onclick="details('{{bus.busNo}}')"> --><!-- </button> -->
+                </div>
+                   
+            </div>
+        </div>
+        {% endfor %}
+
+        
+</div>
+<div id ="map_canvas"></div>
+<script >
+    
+    var source = document.getElementById("source").value;
+    var destination = document.getElementById("destination").value;
+    console.log(source,destination)
+    $('.itee').click(function() {
+        console.log("YAHAAAAAA")
+    $.ajax({
+        type:"GET",
+        url:"/redirect_to_map",
+        data:{
+            'source' : source,
+            'destination':destination
+        },
+        success: function(data){
+            console.log(data)
+            console.log("Success")
+            console.log(data.source)
+            console.log(data.destination)
+            var dest = data.destination
+            var src = data.source
+            window.location.href = 'https://www.google.com/maps/dir/?api=1&origin=Shri+Vaishnav+Vidyapeeth+Vishwavidyalaya+Indore +Ujjain+Road+Gram+Baroli+Madhya+Pradesh&destination=&travelmode=driving';
+        
+    }
+    })
+})
+   //  
+</script>
+<!-- <script>
+
+     if ( navigator.geolocation ) 
+{
+    navigator.geolocation.getCurrentPosition( function(position) {
+
+        var lng = position.coords.longitude;
+        var lat = position.coords.latitude; 
+
+      //    var map = new mapboxgl.Map({
+      //       container: 'map',          
+      //       style: 'mapbox://styles/mapbox/streets-v11',
+            
+      //       center: [ lng, lat ], // [ lng, lat ]
+      //       zoom: 15
+      //   });                   
+      // arr.push({lat:lat,lng:lng})
+
+     
+     // routee(arr)
+    // calculateRoute(arr)
+    console.log(lat , lng)
+    $('.itee').click(function() {
+    $.ajax({
+        type:"GET",
+        url:"/update_session",
+        data:{
+            latitude: lat,
+            longitude: lng
+        },
+        success: function(data){
+            console.log(data)
+            console.log("Success")
+        }
+    })
+})
+
+    });
+
+  }
+
+  
+</script> -->
+
+{% endblock header-orange %} 
+ 

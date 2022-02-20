@@ -1,0 +1,163 @@
+#title{
+	background:#c8c8c8;
+    background:url(https://hdqwalls.com/download/material-design-4k-2048x1152.jpg) fixed;
+	color: #fff;
+}
+h1{
+	font-family: 'Montserrat','sans-serif';
+	font-size: 3rem;
+	line-height: 1.5;
+}
+h3{
+	font-family: 'Recursive',sans-serif;
+	font-size: 1.5em;
+	font-weight: bold;
+}
+h2{
+	font-family: 'Recursive',sans-serif;
+	font-weight: bold;
+	line-height: 1.5;
+
+}
+p{
+	color: grey;
+}
+#p1{
+	font-family: 'Recursive','sans-serif';
+	font-size: 2em;
+	line-height: 1;
+}
+.container-fluid{
+	padding:3% 10%;
+}
+/*navigation bar*/
+.navbar-brand{
+	font-family: 'Recursive',sans-serif;
+	font-size: 1.5rem;
+	font-weight: bold;
+
+}
+.nav-item{
+	font-family: 'Recursive', sans-serif;
+	font-size: 1.3em;
+	padding: 0 18px;
+	font-family: 'Montserrat-Light';
+}
+.navbar{
+	/*padding:0 0 4.5rem*/;
+	/*overflow:hidden;*/
+	/*background-color:#68B6D7;*/
+	
+}
+
+
+/*buttons use kro to margin dedo unko taki text s dur hojaye*/
+.titleimage{
+	margin-left: 10%;
+	width: 60%;
+	/*transform: rotate(30deg);*/
+	
+	position: relative;
+
+}
+/*feature section*/
+#features{
+	/*padding:9% 20%;*/
+	padding-left: 12%;
+	margin-top: 5%
+	background-color: #fff;
+	position: relative;
+	
+	/*padding-bottom: 7%*/
+
+}
+
+.feature-box{
+	text-align: center;
+	padding: 5%;
+	height: 1%;
+	
+	transition: background-color 0.5s ease;
+    transition: height 0.5s ease;
+}
+.feature-box:hover{
+
+	background-image:linear-gradient(to left,rgb(51, 153, 255),rgb(255, 71, 26));
+	height: 2%;
+
+}
+
+.fas1{
+	color: #428af5;
+	margin-bottom: 1rem;
+
+
+}
+.fas1:hover{
+	color: #68B6D7;
+	transition: all 0.2sec;
+}
+#testimonials{
+	/*padding-left: 12%;
+	margin-top: 5%*/
+	padding: 7% 15%;
+	text-align: center;
+	background:#c8c8c8;
+    background:url(https://hdqwalls.com/download/material-design-4k-2048x1152.jpg) fixed;
+    color : #fff;
+
+	
+}
+.testimonial{
+	width: 50%;
+	border-radius: 70%;
+}
+#press{
+	background:#c8c8c8;
+    background:url(https://hdqwalls.com/download/material-design-4k-2048x1152.jpg) fixed; 
+	text-align: center;
+	padding-bottom: 3%;
+
+}
+.logo{
+	margin:20px 40px 10px;
+  width: 15%;
+}
+.d-block{
+
+	width:100px;
+	height: 450px;
+	margin:40px 40px ;
+	margin-left: 30px;
+	padding: 4% 10%;
+}
+#pricing{
+		/*background-color:#68B6D7; */
+		text-align: center;
+		padding-bottom: 3%;
+}
+.row{
+	margin-top: 4%;
+}
+@media (max-width:1028px){
+
+	#title{
+		text-align: center;
+	}
+	.titleimage{
+		position: static;
+	}
+
+}
+/*#footer{
+	padding: 7% 15%;
+	text-align: center;
+	background:#c8c8c8;
+    background:url(https://hdqwalls.com/download/material-design-4k-2048x1152.jpg) fixed;; 
+}*/
+.fa1{
+	margin: 20px 10px;
+}
+
+
+

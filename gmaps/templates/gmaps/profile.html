@@ -1,0 +1,232 @@
+<!-- 
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather&family=Montserrat&family=Sacramento&display=swap"
+        rel="stylesheet">
+    <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300&display=swap" rel="stylesheet">
+    <title>Profile</title>
+    <link rel="stylesheet" href="{% static 'css/profile.css' %}">
+</head>
+
+<body style="background:url(https://hdqwalls.com/download/material-design-4k-2048x1152.jpg) fixed;">
+    <header style="background-image:linear-gradient(to left,rgb(51, 153, 255),rgb(255, 71, 26));">
+        <a href="{% url 'findMyBus' %}" class="logo">Profile</a>
+       
+    </header>
+
+    <main style="background:rgb(0,0,0,0.3);">
+        <div class="graphics">
+            <img class='graphic-img' src="{% static 'images/profile-graphic.svg' %}" alt="">
+        </div>
+
+        <div class="profile-info">
+
+            <div class="user-profile-image-box">
+                <form class="user-profile-image-box"action="#">
+                 <label for="img"><i onclick="myFunction()"><img class='profile-image' src= "{% static 'images/profile-icon.svg' %}"alt=""></i></label>
+                 cmt
+                    <input style ="width:87px; ;"  type="submit">
+                    cmt
+                    <div class="group">
+                    <span><input type="submit" class="button" value="Upload"></span>
+                </div>
+                  </form>
+            </div>
+
+            <div class="login-form">
+               
+                <div class="group">
+                    <div style="font-size: 18px;font-family: 'Noto Sans JP', sans-serif;"><b>Name </div>
+                    <input type="text" name="username" class="input" value="{{user.first_name}}">
+                </div>
+                cmt
+                    <div class="label">Name</div>
+
+                    <div class="data">{{user.first_name}}</div>cmt
+              
+                <div class="group">
+                    <div style="font-size: 18px;font-family: 'Noto Sans JP', sans-serif;"><b>Username </div>
+                    <input style="margin-top:5px;"type="text" name="username" class="input" value="{{user.username}}">
+                </div>
+                <div class="group">
+                    <div style="font-size: 18px;font-family: 'Noto Sans JP', sans-serif;"><b>Email </div>
+                    <input style="margin-top:5px;" type="text" name="username" class="input" value="{{user.email}}">
+                </div>
+                <div><a href = "{% url 'change_password' %}">Change Password</a></div>
+                cmt
+                <div class="label-data">
+                    <div class="label">Username</div>
+
+                    <div class="data">{{user.username}}</div>
+                </div>
+
+                <div class="label-data">
+                    <div class="label">Gmail</div>
+
+                    <div class="data">{{user.email}}</div>
+                </div>
+                cmt
+            </div>
+            
+
+
+
+        </div>
+    </main>
+</body>
+<script type="text/javascript">
+    function myFunction(){
+        console.log("HELoo")
+    }
+</script>
+</html> -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-icons/3.0.1/iconfont/material-icons.min.css">
+    <title></title>
+    <style type="text/css">
+        @import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    /*background-color: #28223F;*/
+    /*background:url(https://hdqwalls.com/download/material-design-4k-2048x1152.jpg) fixed;
+    background-size: cover;
+    font-family: Montserrat, sans-serif;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    min-height: 100vh;
+    margin: 0;*/
+    background:url(https://hdqwalls.com/download/material-design-4k-2048x1152.jpg) fixed;
+    background-size: cover;
+    font-family: Montserrat, sans-serif;
+    
+   
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    min-height: 100vh;
+    margin: 0;
+}
+
+h3 {
+    margin: 10px 0;
+    color: black;
+    font-size: 18px;
+}
+
+h6 {
+    margin: 5px 0;
+    text-transform: uppercase;
+}
+
+p {
+    font-size: 14px;
+    line-height: 21px;
+}
+
+.card-container {
+    /*background-color: #231E39;*/
+    border-radius: 35px;
+    box-shadow: 0px 10px 20px -10px rgba(0,0,0,0.75);
+    color: #B3B8CD;
+    padding-top: 30px;
+    position: relative;
+    width: 500px;
+    max-width: 100%;
+    text-align: center;
+    height: 550px;
+    transition: 0.4s;
+
+}
+
+.card-container .round {
+    border: 1px solid black;
+    border-radius: 50%;
+    padding: 7px;
+}
+
+.card-container:hover {
+  transform: scale(0.9, 0.9);
+  box-shadow: 5px 5px 30px 15px rgba(0,0,0,0.25), 
+    -5px -5px 30px 15px rgba(0,0,0,0.22);
+}
+
+button.primary {
+    margin-top: 20px;
+    background-color: black;
+    border: 1px solid black;
+    border-radius: 3px;
+    color: white;
+    font-family: Montserrat, sans-serif;
+    font-weight: 500;
+    padding: 10px 25px;
+}
+
+button.primary.ghost {
+    background-color: transparent;
+    color: white;
+}
+.input {
+    margin-left:3.1%;width:300px;
+    border:none;
+    padding:8px 13px;
+    border-radius:20px;
+    background:#F1F4F8;"
+}
+
+    </style>
+</head>
+<body>
+     <div class="col-2 col-sm-2 col-md-1 d-flex justify-content-md-center align-items-md-center" 
+            style="padding-bottom: 20px;display: block;">
+                <a class="d-flex justify-content-center align-items-center btn btn-outline-light" 
+                href= "{% url 'userHomePage' %} "style="float:left;margin-top:5%;">
+                    <i class="material-icons d-lg-flex justify-content-lg-center align-items-lg-center">arrow_back</i>
+                </a>
+            </div>
+    <div style="display: flex; align-items: center;justify-content: center;flex-direction: column;margin-top:2%;" >
+    <div class="card-container">
+<!--    <span class="pro">PRO</span> -->
+    <img class="round" src="{% static 'images/profile-icon.svg' %}"  alt="user" />
+    <h3>Name</h3>
+    <input type="text" name="username" class="input" value="{{user.first_name}} {{user.last_name}}" readonly="">
+    <h3>Username</h3>
+    <input type="text" name="username" class="input" value="{{user.username}}" readonly="">
+    <h3>Email</h3>
+    <input type="text" name="username" class="input"  value="{{user.email}}" readonly="">
+    <!--  <h3>Mobile Number</h3>
+    <input type="text" name="username" class="input" value="{{.mobile}}" readonly="">
+ -->
+    
+    <div class="buttons">
+      <!--   <button class="primary">
+            Upload Photo
+        </button> -->
+        <button class="primary ghost"><a style="text-decoration:none;" href = "{% url 'change_password' %}">
+            Change password</a>
+        </button>
+    </div>
+</div>
+</div>
+</body>
+</html>

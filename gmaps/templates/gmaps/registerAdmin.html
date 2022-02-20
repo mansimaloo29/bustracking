@@ -1,0 +1,142 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0 , maximum-scale=1.0">
+  <title>RegisterAdmin page</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=Recursive&family=Ubuntu:ital,wght@0,300;1,400&display=swap" rel="stylesheet"> 
+  <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet"  href="{% static 'css/registerAdmin.css' %}">
+
+  <!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+ -->
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+</head>
+<body style="overflow-x: hidden;">
+  <section class="title1">
+    <div class="container-fluid">
+     <nav class="navbar  navbar-expand-lg navbar-dark  fixed-top  "style="background-image:linear-gradient(to left,rgb(51, 153, 255),rgb(255, 71, 26)) ;">
+      <a class="navbar-brand"   href="{% url 'homeFromAdmin' %}">
+    <img src="{%static 'images/login-img.jpg' %}" alt="" width="40" height="30" href="{% url 'homeFromAdmin' %}">Admin Page</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+            <a class="nav-link" href="#">Register</a>
+        </li>
+        <li class="nav-item ">
+            <a class="nav-link" href="{% url 'addroutes' %}">Route detail</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'admincomplaint' %}">See Complaints</a>
+        </li>
+        <li class="nav-item ">
+            <a class="nav-link" href="{% url 'driverDetails' %}">Driver detail</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'findMyBus' %}">Track bus</a>
+        </li>
+         <li class="nav-item">
+            <a class="nav-link" href="{% url 'index' %}">Upload Notice</a>
+        </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'ulogout' %}">Logout</a>
+        </li>
+       
+    </ul>
+ </div>
+</nav>  
+
+
+    </div>
+  </section>
+
+  <section class="forms-section">
+    <div class="forms">
+      <!-- <div class="form-wrapper">
+        <button type="button" class="switcher switcher-login"> Add Route <span class="underline"></span> </button>
+        <form class="form form-login">
+          <fieldset>
+            <legend>Please, enter source and destination and route number to add route</legend>
+            <div class="input-block">
+              <label for="login-email">Source</label>
+              <input id="login-email" type="text" required >
+            </div>
+            <div class="input-block">
+              <label for="login-password">Destination</label>
+              <input id="login-password" type="text" required>
+            </div>
+            <div class="input-block">
+              <label for="login-password">Route-number</label>
+              <input id="login-password" type="text" required>
+            </div>
+          </fieldset>
+          <button type="submit" class="btn-login">Add Route</button>
+        </form>
+      </div> -->
+      <div class="form-wrapper is-active">
+        <button type="button" class="switcher switcher-signup">
+          Register Page
+          <span class="underline"></span>
+        </button>
+        <form method="POST" action="{% url 'registerUser' %}" class="form form-signup">
+          
+        {% csrf_token %}
+        
+          <fieldset>
+            <legend>Please,register student and drivers</legend>
+
+            <div class="input-block">
+              <label for="signup-password">First Name</label>
+              <input id="signup-password" name="first_name" type="text" required>
+            </div>
+
+            <div class="input-block">
+              <label for="signup-password">Last Name</label>
+              <input id="signup-password" name="last_name" type="text" required>
+            </div>
+
+            <div class="input-block">
+              <label for="signup-password">Username</label>
+              <input id="signup-password" name="username" type="text" required>
+            </div>
+             <div class="input-block">
+              <label for="signup-password">Email</label>
+              <input id="signup-password" name="email" type="Email" required>
+            </div>
+           <!--  <div class="input-block">
+              <label for="signup-password-confirm">Password</label>
+              <input id="signup-password-confirm" name="password" type="Password" required>
+            </div> -->
+             <div class="input-block">
+              <label for="signup-password">Phone Number</label>
+              <input id="signup-password" name="mobile" type="text" required>
+            </div>
+            <div class="input-block">
+              <label for="signup-email">Role</label>
+              
+              <select name="role"class="custom-select">
+                <option value="0">Select Role</option>
+                <option value="1">Student</option>
+                <option value="2">Driver</option>
+
+            </select>
+            </div>
+          </fieldset>
+
+          <button type="submit" class="btn-signup">Register</button>
+        </form>
+      </div>
+    </div>
+  </section>
+  
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-+YQ4JLhjyBLPDQt//I+STsc9iw4uQqACwlvpslubQzn4u2UU2UFM80nGisd026JF" crossorigin="anonymous"></script>
+</body>
+
+</html>

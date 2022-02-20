@@ -1,0 +1,89 @@
+{% load static %}
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+     
+	<title></title>
+	<style>
+		body {
+    /*background-color: #28223F;*/
+    /*background:url(https://hdqwalls.com/download/material-design-4k-2048x1152.jpg) fixed;
+    background-size: cover;
+    font-family: Montserrat, sans-serif;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    min-height: 100vh;
+    margin: 0;*/
+    background:url(https://hdqwalls.com/download/material-design-4k-2048x1152.jpg) fixed;
+    background-size: cover;
+    font-family: Montserrat, sans-serif;
+    
+   
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    min-height: 100vh;
+    margin: 0;
+}
+.forms-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.section-title {
+    font-size: 32px;
+    letter-spacing: 1px;
+    color: #fff;
+}
+
+</style>
+</head>
+<body>
+	<section class="title1 " >
+    <div class="container-fluid">
+     <nav class="navbar  navbar-expand-lg navbar-dark  fixed-top  "style="background-image:linear-gradient(to left,rgb(51, 153, 255),rgb(255, 71, 26)) ;padding:15px;">
+   
+               
+     <a class="navbar-brand"   href="{% url 'homeFromAdmin' %}" style="font-size: 150%;text-decoration: none;color:white;">
+      &nbsp; &nbsp;Bus Notices</a>
+      <span style="float:right;">
+      	 <a class="d-flex justify-content-center align-items-center btn btn-outline-light" 
+                href= "{% url 'userHomePage' %} "style="float:left;color:white;">
+                    <i class="material-icons d-lg-flex justify-content-lg-center align-items-lg-center">Back</i>
+                </a>
+            
+      </span>
+     
+  
+</nav>  
+
+
+    </div>
+  </section>
+  	
+	<center>
+<div class="container" style="font-family: Montserrat, sans-serif; padding-bottom : 50px;">
+      
+<div class="row">
+         {% for i in imag %}
+       <h2 >{{i.caption}}</h2>
+        <h2>{{i.date}}</h2>
+        <img src="{{i.image.url}}" height="100%" width="50%" class="img-thumbnail" alt="...">
+       <hr>
+        {% endfor %}
+        
+</div>
+</div>
+</center>
+</body>
+</html>
